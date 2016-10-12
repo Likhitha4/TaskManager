@@ -1,0 +1,31 @@
+<h1>Total teams : <%= @teams.size %></h1>
+<table border="10">
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>Size</th>
+<th>team_lead</th>
+  <% @teams.each_with_index do |team,index| %>
+     <tr>
+     <td><%= index + 1 %></td>
+     <td><%= team.name.capitalize %></td>
+     <td><%= team.size %></td>
+     <td><%= team.team_lead %></td>
+     </tr>
+     <% end %>
+<tbody>
+</tbody>
+</table>
+
+</tr>
+</thead>
+
+
+
+
+
+
+
+
+

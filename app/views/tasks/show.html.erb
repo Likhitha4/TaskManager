@@ -1,0 +1,44 @@
+<%= link_to "Export to Excel", task_path(@task.id,format:"xls") %>
+
+
+
+<h2><%= @task.title %></h2>
+<ul>
+<h4><li>start_date: <%= @task.start_date %></li><br/></h4>
+<h4><li>due_date: <%= @task.due_date %></li><br/></h4>
+<h4><li>is_completed: <%= @task.is_completed %></li><br/></h4>
+<h4><li>priority: <%= @task.priority %></li><br/></h4>
+<h4><li>Team name: <%= @task.team.name %></li><br/></h4>
+</ul><br/>
+
+
+<h4>Task Members are</h4> 
+<ol>
+<% @task.users.each do |user| %>
+	<li><%= user.email %></li>
+<% end %>
+</ol>
+
+
+
+<% if @task.users.empty? %>
+  No users found
+<% else %>
+<h3>Total users : <%= @task.users.size %></h3>
+<ul>
+   <% @task.users.each do |user| %>
+   	<li><%= user.email %></li>
+   	<% end %>
+ </ul>
+ <% end %>
+
+
+<% if can? :update, @task %>
+<%= link_to "edit", edit_task_path(@task.id) %>
+<% end %>
+ |
+<% if can? :destroy, @task %>
+  <%= link_to "destroy", task_path(@task.id), data: {method: :delete, confirm: "Are you sure?"} %>
+ <% end %> 
+
+

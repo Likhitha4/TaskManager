@@ -1,0 +1,42 @@
+<div class= "row">
+<div class= "page-header">
+</div>
+<div class= "col-md-8">
+
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+
+
+<% if @team_members.empty? %>
+	<p>No team members found</p>
+<% else %>
+
+<table class = "table table-striped" id= "myTable">
+<thead>
+<tr>
+<th>#</th>
+<th>team_id</th>
+<th>users</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+<% @team_members.each_with_index do |team_member, index| %>
+<tr>
+<td><%= index + 1 %></td>
+<td><%= team_member.team_id %></td>
+<td><%= team_member.user.email %></td>
+<td><%= link_to "show", team_member_path(team_member.id) %></td>
+</tr>
+<% end %>
+</tbody>
+</table>
+<% end %>
+</div>
+<%= link_to "Add team_member", new_team_member_path, class: "btn btn-info" %>
+

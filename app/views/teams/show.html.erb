@@ -1,0 +1,104 @@
+<h3><%= @team.name %></h3>
+<ul>
+<li>Size: <%= @team.size %></li>
+<li>Team_lead: <%= @team.team_lead %></li>
+<li>User: <%= @team.user.email %></li>
+</ul><br/>
+
+<h3>Team Members are </h3>
+<ol>
+<% @team.users.each do |user| %>
+	<li><%= user.email %></li>
+<% end %>
+</ol>
+
+<% if can? :update, @team %>
+<%= link_to "edit", edit_team_path(@team.id) %> 
+<% end %>
+|
+<% if can? :destroy, @team %>
+ <%= link_to "destroy", team_path(@team.id), data: {method: :delete, confirm: "Are you sure?"} %>
+ <% end %>
+
+<% if @team.tasks.empty? %>
+  No tasks found
+<% else %>
+<h3>Total Tasks : <%= @team.tasks.size %></h3>
+<ul>
+   <% @team.tasks.each do |task| %>
+   	
+   	<li><%= link_to task.title, task_path(task.id) %></li>
+   	<% end %>
+ </ul>
+ <% end %>
+
+
+ <h3>completed task </h3>
+<ul>
+<% @team.completed_tasks.each do |task| %>
+<li><%= task.title %> - 
+<%= link_to "mark_as_complete", tasks_mark_as_complete_path(task_id: task.id) %>
+</li>
+<% end %>
+</ul>
+
+
+ <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  Add Task
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Add Task</h4>
+      </div>
+      <div class="modal-body">
+
+      <%= form_for Task.new do |f| %>
+      <%= f.hidden_field :team_id, value: @team.id %>
+
+      <div class = "form-group">
+      <label>Title</label><br/>
+      <%= f.text_field :title, class: "form-control" %><br/>
+      </div>
+      
+      <div class = "form-group">
+      <label>Due Date</label><br/>
+      <%= f.date_select :due_date, order:[:day, :month, :year], class: "form-control" %><br/>
+      </div>
+
+      <%= f.check_box :is_completed %> <label>Is completed ?</label><br/>
+
+      <div class = "form-group">
+     <label>User</label><br/>
+     <%= f.collection_check_boxes :user_ids, @team.users, :id, :email do |b| %>
+     <%= b.check_box %>
+     <%= b.label %>
+     <br/>
+     <% end %>
+
+     <%= f.submit %>
+     <% end %>
+    
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<h3>completed task </h3>
+<ul>
+<% @team.completed_tasks.each do |task| %>
+<li><%= task.title %> - 
+<%= link_to "mark_as_complete", tasks_mark_as_complete_path(task_id: task.id) %>
+</li>
+<% end %>
+</ul>

@@ -1,0 +1,51 @@
+<div class = "row">
+<div class= "page-header">
+<h3> Listing personal</h3>
+</div>
+<div class = "col-md-12">
+<%= link_to "Export to Excel", tasks_path(format: "xls") %>
+
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+
+
+<% if @personals.empty? %>
+	<p>Not found</p>
+<% else %>
+
+<table class = "table table-stripped" id = "myTable">
+   <thead>
+      <tr>
+      <th>Name</th>
+      <th>Title</th>
+      <th>Due_date</th>
+      <th>is_completed</th>
+      <th>priority</th>
+      <th>privacy</th>
+      <th>Action</th>
+      </tr>
+   </thead>
+     <% @personals.each do |personal| %>
+        <tr>
+        <td><%= personal.name %></td>
+        <td><%= personal.title %></td>
+        <td><%= personal.due_date %></td>
+        <td><%= task.is_completed %></td>
+        <td><%= task.priority %></td>
+        <td><%= personal.privacy %></td>
+        <td><%= link_to "Show", personal_path(personal.id)%></td>
+        </tr>
+        <% end %>
+        <tbody>
+        </tbody>
+        </table>
+ <% end %>
+ <%= link_to "Add personal", new_personal_path, class: "btn btn-primary"  %>
+ </div>
+
+

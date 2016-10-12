@@ -1,0 +1,48 @@
+<div class = "row">
+<div class = "col-md-7">
+<h3> Listing Comments </h3>
+
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+
+
+<% if @comments.empty? %>
+	<p>No comments found</p>
+<% else %>
+
+<table class = "table table-stripped" id = "myTable">
+   <thead>
+      <tr>
+      <th>Description</th>
+      <th>task_id</th>
+      <th>attachement</th>
+      <th>Action</th>
+      </tr>
+   </thead>
+     <% @comments.each do |comment| %>
+        <tr>
+        <td><%= comment.description %></td>
+        <td><%= comment.task_id %></td>
+        <%#= comment.enjoyer_id %>
+        <td><%= comment.attachment %></td>
+        <td><%= link_to "Show", comment_path(comment.id)%></td>
+        </tr>
+        <% end %>
+        <tbody>
+        </tbody>
+        </table>
+ <% end %>
+ <%= link_to "Add Comment", new_comment_path, class: "btn btn-primary"  %>
+ </div>
+
+
+ <div class= "col-md-5">
+  <div class= "page-header">
+  
+</div>
+</div>

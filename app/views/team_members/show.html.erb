@@ -1,0 +1,6 @@
+<% @team_member.team.try(:name) %>
+<h3><%= @team_member.team_id %></h3>
+user_id: <%= @team_member.user_id %><br/>
+
+<%= link_to "edit", edit_team_member_path(@team_member.id) %> | <%= link_to "destroy", team_member_path(@team_member.id), data: {method: :delete, confirm: "Are you sure?"} %>
+

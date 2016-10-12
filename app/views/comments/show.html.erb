@@ -1,0 +1,7 @@
+<h3><%= @comment.task_id %></h3>
+Task : <%= @comment.task.title %><br/>
+Attachment: <%= @comment.attachment %><br/>
+Description: <%= @comment.description %><br/>
+
+<%= link_to "edit", edit_comment_path(@comment.id) %> | <%= link_to "destroy", comment_path(@comment.id), data: {method: :delete, confirm: "Are you sure?"} %>
+

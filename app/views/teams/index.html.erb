@@ -1,0 +1,113 @@
+<div class= "row">
+<div class= "page-header">
+<h3>Listing teams</h3>
+</div>
+<div class= "col-md-8">
+<%= link_to "Export to Excel", teams_path(format: "xls") %>
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+
+<% if @teams.empty? %>
+	<p>No teams found</p>
+<% else %>
+
+
+<table class = "table table-striped" id= "myTable">
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>size</th>
+<th>team_lead</th>
+<% if current_user.is_admin? %>
+<th>User</th>
+<% end %>
+<th>count task</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+  <% @teams.each_with_index do |team,index| %>
+     <tr>
+     <td><%= index + 1 %></td>
+     <td><%= team.name %></td>
+     <td><%= team.size %></td>
+     <td><%= team.team_lead %></td>
+     <% if current_user.is_admin? %>
+     <td><%= team.user.email %></td>
+     <% end %>
+     <td><%= team.tasks.count %></td>
+     <td>
+     <%= link_to team_path(team.id) do %>
+           <span class= "glyphicon glyphicon-eye-open"></span>
+           <% end %>
+           </td>
+
+     </tr>
+     <% end %>
+</tbody>
+</table>
+<% end %>
+
+<% if can? :create, Team.new %>
+<%= link_to "Add team", new_team_path, class: "btn btn-info"%>
+</div>
+<% end %>
+
+<div class="col-md-4">
+<div class= "page-header">
+<h3>task count for each team</h3>    
+</div>
+<% data = {}
+current_user.teams.each do |team|
+  data[team.name] = team.tasks.count
+end
+%>
+<%= data %>
+
+<%= pie_chart(data) %>
+</div>
+</div>
+
+</div>
+
+
+
+<div class="col-md-5">
+<div class="page-header">
+<h3>team_members for each team</h3>
+</div>
+<% data ={}
+current_user.teams.each do |team|
+  data[team.name] = team.team_members.count
+end
+%>
+<%= data %>
+<%= column_chart(data) %>
+</div>
+</div>
+
+<div class="col-md-5">
+<div class="page-header">
+<h3>Teams count</h3>
+</div>
+<% data ={}
+current_user.teams.each do |team|
+  data[team.name] = team.users.count
+end
+%>
+<%= data %>
+<%= pie_chart(data) %>
+</div>
+</div>
+
+</div>
+
+
+
+

@@ -1,0 +1,43 @@
+<h3>Add Task </h3>
+<%= form_for @task do |f| %>
+<% if @task.errors.any? %>
+<h4>These errors prohibited the form being saved: </h4>
+<ul style="color:red;">
+<% @task.errors.full_messages.each do |msg| %>
+   <li><%= msg %></li>
+   <% end %>
+ </ul>
+ <% end %>
+
+
+<label>Team</label><br/>
+<%= f.collection_select :team_id, Team.all, :id, :name, {prompt: "select Team"} %>
+<br/>
+
+<label>User</label><br/>
+<%= f.collection_check_boxes :user_ids, User.all, :id, :email do |b| %>
+<%= b.check_box %>
+<%= b.label %>
+<br/>
+<% end %>
+
+<label>Title</label><br/>
+<%= f.text_field :title %><br/>
+
+<label>Start Date</label><br/>
+<%= f.date_select :start_date, order:[:day,:month,:year] %><br/>
+
+<label>Due Date</label><br/>
+<%= f.date_select :due_date, order:[:day,:month,:year] %><br/>
+
+<label>Is Completed</label><br/>
+<%= f.select :is_completed, ["True", "False"] %><br/>
+
+<label>Priority</label><br/>
+<%= f.number_field :priority, min:1 %><br/>
+
+
+
+<%= f.submit "Submit", class: "btn btn-primary"%>
+<% end %>
+

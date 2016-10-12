@@ -1,0 +1,23 @@
+<h3>Edit TeamMember </h3>
+
+
+<%= form_for @team_member do |f| %>
+<% if @team_member.errors.any? %>
+<h4>These errors prohibited the form being saved: </h4>
+<ul style="color:red;">
+<% @team_member.errors.full_messages.each do |msg| %>
+   <li><%= msg %></li>
+   <% end %>
+ </ul>
+ <% end %>
+
+<label>Team_id</label><br/>
+<%= f.text_field :team_id %><br/>
+
+<label>User_id</label><br/>
+<%= f.text_field :user_id %><br/>
+
+<%= f.submit %>
+
+<% end %>
+

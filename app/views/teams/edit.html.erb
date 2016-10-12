@@ -1,0 +1,30 @@
+<h3>edit team</h3>
+
+<%= form_for @team do |f| %>
+<% if @team.errors.any? %>
+<h4>These errors prohibited the form being saved: </h4>
+<ul style="color:red;">
+<% @team.errors.full_messages.each do |msg| %>
+   <li><%= msg %></li>
+   <% end %>
+ </ul>
+ <% end %>
+
+<label>Name</label><br/>
+<%= f.text_field :name %><br/>
+
+<label>Size</label><br/>
+<%= f.text_field :size %><br/>
+
+<label>Team_lead</label><br/>
+<%= f.text_field :team_lead %><br/>
+
+<label>Select Members</label><br/>
+<%= f.collection_check_boxes :user_ids, User.all, :id, :email do |b| %>
+	<%= b.check_box %> <%= b.label %> <br/>
+<% end %>
+
+<%= f.submit %>
+
+<% end %>
+

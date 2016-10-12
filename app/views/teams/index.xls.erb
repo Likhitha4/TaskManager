@@ -1,0 +1,23 @@
+<table border="1">
+<thead>
+<tr>
+<th>#</th>
+<th>Name</th>
+<th>size</th>
+<th>team_lead</th>
+<th>Action</th>
+</tr>
+</thead>
+<tbody>
+  <% @teams.each_with_index do |team,index| %>
+     <tr>
+     <td><%= index + 1 %></td>
+     <td><%= team.name %></td>
+     <td><%= team.size %></td>
+     <td><%= team.team_lead %></td>
+     <td><%= link_to "Show", team_path(team.id)%>
+
+     </tr>
+     <% end %>
+</tbody>
+</table>

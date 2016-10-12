@@ -1,0 +1,71 @@
+<div class = "row">
+<div class= "page-header">
+<h3> Listing Tasks </h3>
+</div>
+<div class = "col-md-12">
+<%= link_to "Export to Excel", tasks_path(format: "xls") %>
+
+
+<script>
+$(document).ready(function(){
+    $('#myTable').DataTable();
+});
+</script>
+
+
+
+<% if @tasks.empty? %>
+	<p>No tasks found</p>
+<% else %>
+
+<table class = "table table-stripped" id = "myTable">
+   <thead>
+      <tr>
+      <th>Title</th>
+      <th>Start_Date</th>
+      <th>Due_date</th>
+      <th>is_completed</th>
+      <th>priority</th>
+      <th>team_id</th>
+      <th>User</th>
+      <th>Action</th>
+      </tr>
+   </thead>
+     <% @tasks.each do |task| %>
+        <tr>
+        <td><%= task.title %></td>
+        <td><%= task.start_date %></td>
+        <td><%= task.due_date %></td>
+        <td><%= task.is_completed %></td>
+        <td><%= task.priority %></td>
+        <td><%= task.team_id %></td>
+        <td><%= task.user.email %></td>
+        <td><%= link_to task_path(task.id) do %>
+           <span class= "glyphicon glyphicon-eye-open"></span>
+           <% end %></td>
+        </tr>
+        <% end %>
+        <tbody>
+        </tbody>
+        </table>
+ <% end %>
+ <% if can? :create, Task.new %>
+ <%= link_to "Add task", new_task_path, class: "btn btn-primary"  %>
+ </div>
+ <% end %>
+
+
+ <div class= "col-md-12">
+  <div class= "page-header">
+ <h3>comments for each task</h3>
+  </div>
+  <% data = {}
+  current_user.tasks.each do |task|
+  data[task.title] = task.comments.count
+  end
+ %>
+ <%= data %>
+ <%= pie_chart(data) %>
+</div>
+</div>
+</div>

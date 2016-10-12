@@ -1,0 +1,27 @@
+<h3> Listing Tasks </h3>
+<h3><%= @task.title %></h3>
+<table border='1'>
+   <thead>
+      <tr>
+      <th>Title</th>
+      <th>Start_Date</th>
+      <th>Due_date</th>
+      <th>is_completed</th>
+      <th>priority</th>
+      <th>team_id</th>
+      <th>Action</th>
+      </tr>
+   </thead>
+   <tbody>
+        <tr>
+        <td><%= @task.title %></td>
+        <td><%= @task.start_date %></td>
+        <td><%= @task.due_date %></td>
+        <td><%= @task.is_completed %></td>
+        <td><%= @task.priority %></td>
+        <td><%= @task.team_id %></td>
+        
+        </tr>
+        </tbody>
+        </table>
+        
